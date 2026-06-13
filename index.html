@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Negeri Sugaria — Where Every Flavor Belongs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C89A1A;
+    --gold-pale: #FBE89A;
+    --red: #E8324A;
+    --red-dark: #9B1E2D;
+    --chocolate: #5C2D0E;
+    --chocolate-mid: #8B4513;
+    --cream: #FFF8EE;
+    --cream-dark: #F0E4C8;
+    --purple: #7B3FA0;
+    --purple-light: #C5A0E0;
+    --cyan: #4FC3F7;
+    --green: #4CAF50;
+    --bg-deep: #0A0501;
+    --bg-mid: #120B03;
+    --bg-surface: #1C1108;
+    --bg-card: #221508;
+    --text-primary: #FFF8EE;
+    --text-muted: #C8B088;
+    --border-glow: rgba(245, 200, 66, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Lora', Georgia, serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+  /* ── TYPOGRAPHY ── */
+  .font-display { font-family: 'Cinzel Decorative', serif; }
+  .font-ui { font-family: 'Nunito', sans-serif; }
+
+  /* ── STARS BACKGROUND ── */
+  #stars-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  .particles {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100%) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,5,1,0.95), transparent);
+    transition: background 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(10,5,1,0.97);
+    border-bottom: 1px solid rgba(245,200,66,0.2);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+  .nav-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .nav-logo span { color: var(--text-muted); font-size: 0.7rem; display: block; font-family: 'Nunito', sans-serif; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--bg-deep) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    font-weight: 700 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-pale) !important; color: var(--bg-deep) !important; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 60%, rgba(92,45,14,0.5) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(123,63,160,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(79,195,247,0.08) 0%, transparent 60%),
+      var(--bg-deep);
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  .hero-badge {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(245,200,66,0.4);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    display: inline-block;
+    animation: fadeInDown 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(245,200,66,0.4), 0 4px 20px rgba(0,0,0,0.8);
+    animation: fadeInDown 0.8s 0.1s ease both;
+    position: relative; z-index: 1;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--cream);
+    text-shadow: 0 0 40px rgba(255,248,238,0.3), 0 4px 20px rgba(0,0,0,0.8);
+    display: block;
+    font-size: 0.45em;
+    letter-spacing: 0.2em;
+    margin-top: 0.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 1.5rem 0 2.5rem;
+    animation: fadeInDown 0.8s 0.2s ease both;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #A89070;
+    margin-bottom: 3rem;
+    animation: fadeInDown 0.8s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeInDown 0.8s 0.4s ease both;
+  }
+  .btn-primary {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    background: var(--gold);
+    color: var(--bg-deep);
+    border: none; cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: var(--gold-pale);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(245,200,66,0.3);
+  }
+  .btn-ghost {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid rgba(245,200,66,0.5);
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover {
+    background: rgba(245,200,66,0.08);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    animation: fadeInDown 1s 0.8s ease both;
+    opacity: 0.6;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; height: 40px; }
+    50%       { opacity: 1;   height: 50px; }
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; z-index: 1; }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .section-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1; max-width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(245,200,66,0.5));
+  }
+  .section-label::before {
+    background: linear-gradient(to left, transparent, rgba(245,200,66,0.5));
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .section-divider {
+    width: 80px; height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* ── ABOUT / LORE ── */
+  #lore {
+    padding: 7rem 0;
+    background: linear-gradient(to bottom, var(--bg-deep), var(--bg-mid));
+  }
+  .lore-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .lore-text p {
+    color: var(--text-muted);
+    line-height: 1.9;
+    margin-bottom: 1.25rem;
+    font-size: 1.02rem;
+  }
+  .lore-text p strong { color: var(--gold-pale); font-weight: 600; }
+
+  .lore-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .lore-stat {
+    border-left: 2px solid var(--gold-dark);
+    padding-left: 1rem;
+  }
+  .lore-stat-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .lore-stat-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .lore-emblem {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .emblem-ring {
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,200,66,0.2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: rotateSlow 60s linear infinite;
+  }
+  @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .emblem-inner {
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, rgba(139,69,19,0.4), rgba(10,5,1,0.9));
+    border: 1px solid rgba(245,200,66,0.35);
+    display: flex; align-items: center; justify-content: center;
+    animation: rotateSlow 60s linear infinite reverse;
+    box-shadow: 0 0 60px rgba(245,200,66,0.1), inset 0 0 60px rgba(0,0,0,0.5);
+  }
+  .emblem-text {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-align: center;
+    animation: rotateSlow 60s linear infinite; /* counter-rotates with parent */
+    padding: 1.5rem;
+  }
+  .emblem-text small {
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  /* ── CHARACTERS ── */
+  #characters {
+    padding: 7rem 0;
+    background: var(--bg-mid);
+  }
+  .chars-header { text-align: center; margin-bottom: 4rem; }
+  .chars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .char-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+  .char-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--char-color);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+  .char-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, var(--char-color-alpha), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .char-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.12); }
+  .char-card:hover::before { opacity: 1; }
+  .char-card:hover::after { opacity: 1; }
+
+  .char-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 1.25rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    background: var(--char-color-alpha);
+    border: 2px solid var(--char-color);
+    position: relative; z-index: 1;
+    transition: transform 0.3s;
+  }
+  .char-card:hover .char-icon { transform: scale(1.1) rotate(-5deg); }
+
+  .char-tier {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--char-color);
+    margin-bottom: 0.4rem;
+    position: relative; z-index: 1;
+  }
+  .char-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.2rem;
+    position: relative; z-index: 1;
+  }
+  .char-alias {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+    position: relative; z-index: 1;
+  }
+  .char-class {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--char-color);
+    background: var(--char-color-alpha);
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    display: inline-block;
+    position: relative; z-index: 1;
+  }
+  .char-theme {
+    font-size: 0.8rem;
+    color: #6B5840;
+    margin-top: 0.75rem;
+    position: relative; z-index: 1;
+    line-height: 1.5;
+  }
+
+  /* ── LANDMARKS ── */
+  #landmarks {
+    padding: 7rem 0;
+    background: linear-gradient(to bottom, var(--bg-mid), var(--bg-surface));
+  }
+  .landmarks-header { text-align: center; margin-bottom: 4rem; }
+  .landmarks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .landmark-item {
+    background: var(--bg-surface);
+    padding: 2rem 1.5rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .landmark-item:hover { background: var(--bg-card); }
+  .landmark-item:hover .landmark-glow { opacity: 1; }
+  .landmark-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, var(--lm-color-alpha), transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .landmark-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: rgba(255,255,255,0.05);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+  .landmark-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .landmark-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .landmark-desc {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .landmark-beacon {
+    margin-top: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lm-color);
+    opacity: 0.8;
+  }
+
+  /* ── SEASON 1 ── */
+  #season1 {
+    padding: 7rem 0;
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+  .s1-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .s1-acts { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+  .s1-act {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 2px;
+    background: rgba(255,255,255,0.02);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .s1-act:hover { border-color: rgba(245,200,66,0.2); background: rgba(245,200,66,0.03); }
+  .act-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    opacity: 0.4;
+    min-width: 2rem;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .act-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.9rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+  .act-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .s1-visual {
+    position: relative; padding: 3rem;
+  }
+  .s1-card {
+    background: linear-gradient(135deg, #1C0F05, #0F0803);
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 4px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .s1-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+  .s1-season-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .s1-card-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  .s1-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .s1-themes {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .theme-tag {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 2px;
+    color: var(--text-muted);
+  }
+
+  /* ── NEWS ── */
+  #news {
+    padding: 7rem 0;
+    background: linear-gradient(to bottom, var(--bg-surface), var(--bg-mid));
+  }
+  .news-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+  .news-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .news-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .news-card:hover { border-color: rgba(245,200,66,0.2); transform: translateY(-3px); }
+  .news-thumb {
+    height: 200px;
+    background: linear-gradient(135deg, var(--bg-surface), var(--bg-deep));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    position: relative; overflow: hidden;
+  }
+  .news-card:nth-child(2) .news-thumb, .news-card:nth-child(3) .news-thumb { height: 140px; }
+  .news-thumb-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(245,200,66,0.05), transparent 70%);
+  }
+  .news-body { padding: 1.5rem; }
+  .news-tag {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .news-title {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.45;
+    margin-bottom: 0.6rem;
+  }
+  .news-card:nth-child(2) .news-title, .news-card:nth-child(3) .news-title { font-size: 0.88rem; }
+  .news-excerpt {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .news-card:nth-child(2) .news-excerpt, .news-card:nth-child(3) .news-excerpt { display: none; }
+  .news-date {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    color: #4A3A28;
+    margin-top: 1rem;
+  }
+
+  /* ── NEWSLETTER ── */
+  #newsletter {
+    padding: 5rem 0;
+    background: var(--bg-mid);
+  }
+  .newsletter-inner {
+    max-width: 600px; margin: 0 auto;
+    text-align: center;
+  }
+  .newsletter-inner .section-label { justify-content: center; }
+  .newsletter-inner .section-label::before, .newsletter-inner .section-label::after { max-width: 40px; }
+  .newsletter-inner p { color: var(--text-muted); margin: 1rem 0 2rem; line-height: 1.8; font-size: 0.95rem; }
+  .newsletter-form {
+    display: flex; gap: 0;
+    max-width: 440px; margin: 0 auto;
+  }
+  .newsletter-form input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-primary);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    border-radius: 2px 0 0 2px;
+    transition: border-color 0.2s;
+  }
+  .newsletter-form input:focus { border-color: rgba(245,200,66,0.4); }
+  .newsletter-form input::placeholder { color: #4A3A28; }
+  .newsletter-form button {
+    background: var(--gold);
+    color: var(--bg-deep);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0 2px 2px 0;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .newsletter-form button:hover { background: var(--gold-pale); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg-deep);
+    border-top: 1px solid rgba(245,200,66,0.1);
+    padding: 4rem 0 2rem;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.3rem; display: block; margin-bottom: 1rem; text-decoration: none; }
+  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; max-width: 280px; }
+  .footer-col h4 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.65rem; }
+  .footer-col ul li a {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--cream); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+    color: #3A2A18;
+  }
+  .footer-bottom p a { color: var(--gold-dark); text-decoration: none; }
+  .social-links { display: flex; gap: 0.75rem; }
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── ORNAMENTS ── */
+  .ornament {
+    text-align: center;
+    color: rgba(245,200,66,0.3);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    margin: 2rem 0;
+    font-family: 'Cinzel Decorative', serif;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .lore-grid, .s1-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .lore-emblem { display: none; }
+    .chars-grid { grid-template-columns: repeat(2, 1fr); }
+    .landmarks-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .chars-grid { grid-template-columns: repeat(2, 1fr); }
+    .landmarks-grid { grid-template-columns: 1fr 1fr; }
+    .hero-title { font-size: 2.2rem; }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-form input { border-right: 1px solid rgba(255,255,255,0.1); border-radius: 2px; }
+    .newsletter-form button { border-radius: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars Canvas -->
+<canvas id="stars-canvas"></canvas>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo font-display">
+    Negeri Sugaria
+    <span>The Sweet Kingdom</span>
+  </a>
+  <ul class="nav-links font-ui">
+    <li><a href="#lore">The World</a></li>
+    <li><a href="#characters">Characters</a></li>
+    <li><a href="#landmarks">Landmarks</a></li>
+    <li><a href="#season1">Season 1</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#newsletter" class="nav-cta">Follow Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="particles" id="hero-particles"></div>
+
+  <div class="hero-badge font-ui">✦ Season 1 — The Fading Sweetness ✦</div>
+
+  <h1 class="hero-title font-display">
+    Negeri Sugaria
+    <em>Where Every Flavor Belongs</em>
+  </h1>
+
+  <p class="hero-tagline">
+    A dessert fantasy world built from Sweetness, Flavor &amp; Ancient Recipes
+  </p>
+
+  <p class="hero-desc">
+    Ketika Sugar Core dicuri dan warna dunia mulai memudar,
+    delapan guardian cupcake harus bersatu untuk menyelamatkan
+    Negeri Sugaria dari kegelapan Chocolate Abyss.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#season1" class="btn-primary">Jelajahi Cerita</a>
+    <a href="#characters" class="btn-ghost">Temui Para Guardian</a>
+  </div>
+
+  <div class="hero-scroll font-ui">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- LORE / ABOUT -->
+<section id="lore">
+  <div class="section-inner">
+    <div class="lore-grid">
+      <div class="lore-text reveal">
+        <div class="section-label">The World</div>
+        <h2 class="section-title font-display">Sebuah Kerajaan<br>yang Terasa Manis</h2>
+        <div class="section-divider"></div>
+        <p>
+          <strong>Negeri Sugaria</strong> adalah dunia dessert fantasy yang terbangun dari tiga energi utama:
+          <strong>Sweetness</strong> sebagai kehidupan, <strong>Flavor</strong> sebagai identitas,
+          dan <strong>Ancient Recipes</strong> sebagai sihir yang menghubungkan segalanya.
+        </p>
+        <p>
+          Di jantung kerajaan berdiri <strong>Gigantic Strawberry Crystal</strong> — rumah bagi
+          Sugar Core, sumber kehangatan seluruh Sugaria. Ketika inti ini hilang,
+          bukan hanya warna yang memudar — <em>memori, rasa, dan jiwa dunia</em>
+          perlahan ikut lenyap.
+        </p>
+        <p>
+          Dari filosofi <strong>Recipe Harmony</strong>, penduduk Sugaria percaya:
+          setiap rasa berhak hidup bersama, karena perbedaan bukanlah kelemahan —
+          ia adalah sumber kehidupan itu sendiri.
+        </p>
+        <div class="lore-stats">
+          <div class="lore-stat">
+            <div class="lore-stat-num font-display">7</div>
+            <div class="lore-stat-label font-ui">Guardian Cupcake</div>
+          </div>
+          <div class="lore-stat">
+            <div class="lore-stat-num font-display">7</div>
+            <div class="lore-stat-label font-ui">Landmark Dunia</div>
+          </div>
+          <div class="lore-stat">
+            <div class="lore-stat-num font-display">1</div>
+            <div class="lore-stat-label font-ui">Sugar Core</div>
+          </div>
+          <div class="lore-stat">
+            <div class="lore-stat-num font-display">∞</div>
+            <div class="lore-stat-label font-ui">Rasa yang Mungkin</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lore-emblem reveal reveal-delay-2">
+        <div class="emblem-ring">
+          <div class="emblem-inner">
+            <div class="emblem-text font-display">
+              ✦ N ✦<br>S
+              <small>The Sweet Kingdom</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<section id="characters">
+  <div class="section-inner">
+    <div class="chars-header">
+      <div class="section-label" style="justify-content:center">The Guardians</div>
+      <h2 class="section-title font-display reveal">Para Penjaga Sugaria</h2>
+      <p style="color:var(--text-muted);max-width:540px;margin:0 auto;font-size:0.95rem;line-height:1.8;" class="reveal reveal-delay-1">
+        Tujuh cupcake guardian, satu misi. Setiap rasa membawa kekuatan uniknya masing-masing.
+      </p>
+    </div>
+    <div class="chars-grid">
+
+      <!-- Strawberry -->
+      <div class="char-card reveal" style="--char-color:#E8324A;--char-color-alpha:rgba(232,50,74,0.1)">
+        <div class="char-icon">🍓</div>
+        <div class="char-tier font-ui">★ Tier S</div>
+        <div class="char-name font-display">Strawberry</div>
+        <div class="char-alias">The Sweet Knight</div>
+        <div class="char-class font-ui">Knight</div>
+        <div class="char-theme">Hope · Courage · Warmth</div>
+      </div>
+
+      <!-- Chocolate -->
+      <div class="char-card reveal reveal-delay-1" style="--char-color:#C4873A;--char-color-alpha:rgba(196,135,58,0.1)">
+        <div class="char-icon">🍫</div>
+        <div class="char-tier font-ui">★ Tier S</div>
+        <div class="char-name font-display">Chocolate</div>
+        <div class="char-alias">The Bittersweet Wanderer</div>
+        <div class="char-class font-ui">Rogue</div>
+        <div class="char-theme">Bittersweet Loneliness</div>
+      </div>
+
+      <!-- Kiwi -->
+      <div class="char-card reveal reveal-delay-2" style="--char-color:#5DB85D;--char-color-alpha:rgba(93,184,93,0.1)">
+        <div class="char-icon">🥝</div>
+        <div class="char-tier font-ui">Tier A</div>
+        <div class="char-name font-display">Kiwi</div>
+        <div class="char-alias">The Gentle Alchemist</div>
+        <div class="char-class font-ui">Alchemist</div>
+        <div class="char-theme">Healing · Nature · Intelligence</div>
+      </div>
+
+      <!-- Orange -->
+      <div class="char-card reveal" style="--char-color:#F5872A;--char-color-alpha:rgba(245,135,42,0.1)">
+        <div class="char-icon">🍊</div>
+        <div class="char-tier font-ui">Tier A</div>
+        <div class="char-name font-display">Orange</div>
+        <div class="char-alias">The Crystal Wizard</div>
+        <div class="char-class font-ui">Wizard</div>
+        <div class="char-theme">Light · Energy · Control</div>
+      </div>
+
+      <!-- Banana -->
+      <div class="char-card reveal reveal-delay-1" style="--char-color:#E8C840;--char-color-alpha:rgba(232,200,64,0.1)">
+        <div class="char-icon">🍌</div>
+        <div class="char-tier font-ui">Tier B</div>
+        <div class="char-name font-display">Banana</div>
+        <div class="char-alias">The Keeper of Ancient Recipes</div>
+        <div class="char-class font-ui">Mage</div>
+        <div class="char-theme">Knowledge · Gravity · Ancient Magic</div>
+      </div>
+
+      <!-- Grape -->
+      <div class="char-card reveal reveal-delay-2" style="--char-color:#9B59D0;--char-color-alpha:rgba(155,89,208,0.1)">
+        <div class="char-icon">🍇</div>
+        <div class="char-tier font-ui">Tier B</div>
+        <div class="char-name font-display">Grape</div>
+        <div class="char-alias">The Dream Fairy</div>
+        <div class="char-class font-ui">Fairy</div>
+        <div class="char-theme">Dream · Spirit · Emotion</div>
+      </div>
+
+      <!-- Blueberry -->
+      <div class="char-card reveal reveal-delay-3" style="--char-color:#4A7FD4;--char-color-alpha:rgba(74,127,212,0.1)">
+        <div class="char-icon">🫐</div>
+        <div class="char-tier font-ui">Tier B</div>
+        <div class="char-name font-display">Blueberry</div>
+        <div class="char-alias">The Merchant of Smiles</div>
+        <div class="char-class font-ui">Tycoon</div>
+        <div class="char-theme">Trade · Community · Fortune</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LANDMARKS -->
+<section id="landmarks">
+  <div class="section-inner">
+    <div class="landmarks-header">
+      <div class="section-label" style="justify-content:center">The World Map</div>
+      <h2 class="section-title font-display reveal">Tujuh Landmark Sugaria</h2>
+    </div>
+    <div class="landmarks-grid reveal">
+
+      <div class="landmark-item" style="--lm-color:#F5872A;--lm-color-alpha:rgba(245,135,42,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">01</div>
+        <div class="landmark-icon">🏰</div>
+        <div class="landmark-name font-display">Gigantic Strawberry Castle</div>
+        <div class="landmark-desc font-ui">Principal Fortress. Pusat kerajaan, markas party, dan rumah Sugar Core.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Hope / Leadership</div>
+      </div>
+
+      <div class="landmark-item" style="--lm-color:#4A7FD4;--lm-color-alpha:rgba(74,127,212,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">02</div>
+        <div class="landmark-icon">🏪</div>
+        <div class="landmark-name font-display">Blueberry Marketplace</div>
+        <div class="landmark-desc font-ui">The Juicy Heart of Sugaria. Pusat ekonomi dan kehidupan sosial kerajaan.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Trust / Community</div>
+      </div>
+
+      <div class="landmark-item" style="--lm-color:#5DB85D;--lm-color-alpha:rgba(93,184,93,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">03</div>
+        <div class="landmark-icon">🌿</div>
+        <div class="landmark-name font-display">Kiwi Greenhouse</div>
+        <div class="landmark-desc font-ui">Botanical Conservatory. Tempat penyembuhan, bertani, dan alkimia alam.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Patience / Recovery</div>
+      </div>
+
+      <div class="landmark-item" style="--lm-color:#E8C840;--lm-color-alpha:rgba(232,200,64,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">04</div>
+        <div class="landmark-icon">🗼</div>
+        <div class="landmark-name font-display">Banana Tower</div>
+        <div class="landmark-desc font-ui">Faksi Pengetahuan. Arsip purba dan rahasia Oven of Origin tersimpan di sini.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Fear / Wisdom</div>
+      </div>
+
+      <div class="landmark-item" style="--lm-color:#F5D442;--lm-color-alpha:rgba(245,212,66,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">05</div>
+        <div class="landmark-icon">💎</div>
+        <div class="landmark-name font-display">Citrus Crystal Lighthouse</div>
+        <div class="landmark-desc font-ui">The Principal Beacon. Mercusuar cahaya yang menerangi peta dunia Sugaria.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Truth / Sacrifice</div>
+      </div>
+
+      <div class="landmark-item" style="--lm-color:#9B59D0;--lm-color-alpha:rgba(155,89,208,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">06</div>
+        <div class="landmark-icon">🌊</div>
+        <div class="landmark-name font-display">Grape Chalice Swamp</div>
+        <div class="landmark-desc font-ui">Botanical Conservatory &amp; Healing Abyss. Tempat memori, racun, dan ilusi bersemayam.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Memory / Acceptance</div>
+      </div>
+
+      <div class="landmark-item" style="--lm-color:#C4873A;--lm-color-alpha:rgba(196,135,58,0.08)">
+        <div class="landmark-glow"></div>
+        <div class="landmark-num font-display">07</div>
+        <div class="landmark-icon">🌑</div>
+        <div class="landmark-name font-display">Chocolate Abyss Gate</div>
+        <div class="landmark-desc font-ui">Where Sweet Memories Melt Into Silence. Tempat konfrontasi final dan kebenaran tersembunyi.</div>
+        <div class="landmark-beacon font-ui">⬡ Beacon: Belonging / Harmony</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEASON 1 -->
+<section id="season1">
+  <div class="section-inner">
+    <div class="s1-grid">
+      <div>
+        <div class="section-label reveal">Season 1</div>
+        <h2 class="section-title font-display reveal reveal-delay-1">The Fading<br>Sweetness</h2>
+        <div class="section-divider reveal reveal-delay-2"></div>
+        <p style="color:var(--text-muted);line-height:1.8;margin-bottom:2rem;font-size:0.95rem;" class="reveal reveal-delay-2">
+          Ketika Sugar Core hilang dan warna Sugaria mulai memudar,
+          para guardian harus mengaktifkan jaringan Sugar Beacon
+          melintasi seluruh penjuru kerajaan — sebelum kedinginan
+          mint mengubur semua kehangatan yang tersisa.
+        </p>
+        <div class="s1-acts">
+          <div class="s1-act reveal reveal-delay-2">
+            <div class="act-num font-display">I</div>
+            <div>
+              <div class="act-title font-display">The Fading Light</div>
+              <div class="act-desc">Festival Sweetlight di Strawberry Castle. Sugar Core dicuri. Warna dunia mulai memudar dan Sungai Lactacea tercemar.</div>
+            </div>
+          </div>
+          <div class="s1-act reveal reveal-delay-3">
+            <div class="act-num font-display">II</div>
+            <div>
+              <div class="act-title font-display">Journey Across Sugaria</div>
+              <div class="act-desc">Para guardian mengaktifkan jaringan Sugar Beacon, satu per satu, melintasi setiap landmark yang terancam corruption.</div>
+            </div>
+          </div>
+          <div class="s1-act reveal reveal-delay-4">
+            <div class="act-num font-display">III</div>
+            <div>
+              <div class="act-title font-display">Chocolate Abyss and the Final Truth</div>
+              <div class="act-desc">Chocolate Cupcake menghadapi tawaran Hollow Crumb. Recipe Harmony dipulihkan. Sugaria menemukan makna harmoni yang sesungguhnya.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="s1-visual reveal reveal-delay-2">
+        <div class="s1-card">
+          <div class="s1-season-label font-ui">Season 1 · Story Arc</div>
+          <div class="s1-card-title font-display">"Not everything broken<br>wants to hurt you."</div>
+          <div class="s1-card-desc">
+            Season 1 bukan hanya tentang menyelamatkan dunia —
+            ini adalah cerita tentang Chocolate Cupcake yang dianggap
+            berbeda, tentang penerimaan rasa yang paling pahit,
+            dan tentang menemukan tempat untuk pulang.
+          </div>
+          <div class="s1-themes">
+            <span class="theme-tag font-ui">Penerimaan Perbedaan</span>
+            <span class="theme-tag font-ui">Recipe Harmony</span>
+            <span class="theme-tag font-ui">Warmth vs Numbness</span>
+            <span class="theme-tag font-ui">Chosen Family</span>
+            <span class="theme-tag font-ui">Bittersweet Identity</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="section-inner">
+    <div class="news-header reveal">
+      <div>
+        <div class="section-label">Updates</div>
+        <h2 class="section-title font-display">Berita Terbaru</h2>
+      </div>
+      <a href="#" class="btn-ghost" style="font-size:0.8rem;padding:0.6rem 1.2rem;">Lihat Semua →</a>
+    </div>
+    <div class="news-grid">
+      <div class="news-card reveal">
+        <div class="news-thumb">
+          <div class="news-thumb-glow"></div>
+          🏰
+        </div>
+        <div class="news-body">
+          <div class="news-tag font-ui">Lore Reveal</div>
+          <div class="news-title">Mengenal Oven of Origin: Sumber Kehidupan yang Tersegel</div>
+          <div class="news-excerpt">
+            Untuk pertama kalinya, kami mengungkap detail lengkap tentang gunung purba bawah tanah tempat seluruh kehidupan Sugaria dipanggang — dan mengapa ia harus disegel selamanya.
+          </div>
+          <div class="news-date font-ui">Mei 2026</div>
+        </div>
+      </div>
+      <div class="news-card reveal reveal-delay-1">
+        <div class="news-thumb">
+          <div class="news-thumb-glow"></div>
+          🍫
+        </div>
+        <div class="news-body">
+          <div class="news-tag font-ui">Character Spotlight</div>
+          <div class="news-title">Chocolate Cupcake: The Bittersweet Wanderer Deep Dive</div>
+          <div class="news-date font-ui">Mei 2026</div>
+        </div>
+      </div>
+      <div class="news-card reveal reveal-delay-2">
+        <div class="news-thumb">
+          <div class="news-thumb-glow"></div>
+          ✦
+        </div>
+        <div class="news-body">
+          <div class="news-tag font-ui">Announcement</div>
+          <div class="news-title">Season 1 Story Document — Official Release</div>
+          <div class="news-date font-ui">Mei 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="section-inner">
+    <div class="newsletter-inner reveal">
+      <div class="section-label">Stay Connected</div>
+      <h2 class="section-title font-display">Jangan Lewatkan<br>Update Sugaria</h2>
+      <p>
+        Daftarkan email kamu untuk mendapatkan lore drops eksklusif,
+        update karakter, dan berita terbaru dari Negeri Sugaria langsung di inbox.
+      </p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="emailmu@domain.com">
+        <button class="font-ui">Daftar ✦</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo font-display">
+          Negeri Sugaria
+          <span>Where Every Flavor Belongs</span>
+        </a>
+        <p>
+          Sebuah franchise IP lokal Indonesia — dunia dessert fantasy
+          yang membuktikan bahwa setiap rasa punya tempatnya sendiri.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4 class="font-ui">Dunia</h4>
+        <ul>
+          <li><a href="#lore">The Lore</a></li>
+          <li><a href="#landmarks">Landmarks</a></li>
+          <li><a href="#season1">Season 1</a></li>
+          <li><a href="#">Mythology</a></li>
+          <li><a href="#">Oven of Origin</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="font-ui">Karakter</h4>
+        <ul>
+          <li><a href="#">Strawberry Cupcake</a></li>
+          <li><a href="#">Chocolate Cupcake</a></li>
+          <li><a href="#">Kiwi Cupcake</a></li>
+          <li><a href="#">Semua Karakter</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="font-ui">Franchise</h4>
+        <ul>
+          <li><a href="#">Merchandise</a></li>
+          <li><a href="#">Fan Art</a></li>
+          <li><a href="#">Media Kit</a></li>
+          <li><a href="#">Kolaborasi</a></li>
+          <li><a href="#">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>
+        © 2026 Negeri Sugaria. All rights reserved. — 
+        <a href="#">Privacy Policy</a> · <a href="#">Terms of Use</a>
+      </p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/negerisugaria" target="_blank" rel="noopener noreferrer" class="social-link font-ui">IG</a>
+        <a href="https://www.youtube.com/@negerisugaria" target="_blank" rel="noopener noreferrer" class="social-link font-ui">YT</a>
+        <a href="https://id.pinterest.com/negerisugaria/" target="_blank" rel="noopener noreferrer" class="social-link font-ui">PIN</a>
+        <a href="https://lynk.id/negerisugaria" target="_blank" rel="noopener noreferrer" class="social-link font-ui">🔗</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── STARS ──
+  (function() {
+    const c = document.getElementById('stars-canvas');
+    const ctx = c.getContext('2d');
+    let stars = [];
+    function resize() {
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+    }
+    function init() {
+      stars = [];
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          x: Math.random() * c.width,
+          y: Math.random() * c.height,
+          r: Math.random() * 1.2,
+          a: Math.random(),
+          speed: 0.002 + Math.random() * 0.005,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+    function draw(t) {
+      ctx.clearRect(0, 0, c.width, c.height);
+      stars.forEach(s => {
+        const alpha = s.a * (0.4 + 0.6 * Math.sin(t * s.speed + s.phase));
+        const warmth = Math.random() > 0.7;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = warmth
+          ? `rgba(245,200,66,${alpha})`
+          : `rgba(255,248,238,${alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize', () => { resize(); init(); });
+    resize(); init(); draw(0);
+  })();
+
+  // ── PARTICLES ──
+  (function() {
+    const container = document.getElementById('hero-particles');
+    const colors = ['#F5C842','#E8324A','#C4873A','#9B59D0','#4FC3F7','#5DB85D','#F5D442'];
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 3 + Math.random() * 5;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      p.style.cssText = `
+        width:${size}px;height:${size}px;
+        background:${color};
+        left:${Math.random() * 100}%;
+        bottom:${Math.random() * 30}%;
+        animation-duration:${6 + Math.random() * 10}s;
+        animation-delay:${Math.random() * 8}s;
+        opacity:0;
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  // ── NAVBAR SCROLL ──
+  window.addEventListener('scroll', function() {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // ── REVEAL ON SCROLL ──
+  (function() {
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  })();
+
+  // ── SMOOTH ANCHOR ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── NEWSLETTER FORM ──
+  const form = document.querySelector('.newsletter-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('button');
+      btn.textContent = 'Terdaftar! ✓';
+      btn.style.background = '#5DB85D';
+      btn.style.color = '#fff';
+    });
+    form.querySelector('button').addEventListener('click', function() {
+      const input = form.querySelector('input');
+      if (input.value.includes('@')) {
+        this.textContent = 'Terdaftar! ✓';
+        this.style.background = '#5DB85D';
+        this.style.color = '#fff';
+        input.value = '';
+      }
+    });
+  }
+</script>
+</body>
+</html>
