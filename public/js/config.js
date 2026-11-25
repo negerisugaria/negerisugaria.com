@@ -1,9 +1,6 @@
 // Konfigurasi Koneksi Supabase untuk Deployment Statis (GitHub Pages: https://negerisugaria.com/)
-// Isi supabaseUrl dan supabaseAnonKey dari:
-// Supabase Dashboard -> Project Settings -> API
-// (Aman diletakkan di frontend karena dilindungi Row Level Security / RLS di PostgreSQL).
-// Biarkan kosong ('') saat menjalankan server Node.js lokal.
+// Menggunakan Project URL dan Publishable/Anon Key publik (dilindungi RLS di PostgreSQL).
 window.WEBSEKOLAH_CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: ''
+  supabaseUrl: 'https://yleslnminyfisultdpij.supabase.co',
+  supabaseAnonKey: 'sb_publishable_QBPEQkEv_n3mS-jnopyoJg_C9VTPwBm'
 };

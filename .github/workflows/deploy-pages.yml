@@ -24,15 +24,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Inject Supabase public config if GitHub Variables are set
+      - name: Verify public folder exists
         run: |
-          if [ -n "${{ vars.SUPABASE_URL }}" ] && [ -n "${{ vars.SUPABASE_ANON_KEY }}" ]; then
-            cat > public/js/config.js <<'EOF'
-          window.WEBSEKOLAH_CONFIG = {
-            supabaseUrl: "${{ vars.SUPABASE_URL }}",
-            supabaseAnonKey: "${{ vars.SUPABASE_ANON_KEY }}"
-          };
-          EOF
+          if [ ! -d "./public" ]; then
+            echo "Folder 'public/' tidak ditemukan di root repositori GitHub. Pastikan Anda sudah push seluruh proyek dari lokal."
+            ls -la
+            exit 1
+          fi
+
+      - name: Inject Supabase public config if GitHub Variables are set
+        env:
+          SB_URL: ${{ vars.SUPABASE_URL }}
+          SB_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -n "$SB_URL" ] && [ -n "$SB_KEY" ]; then
+            printf 'window.WEBSEKOLAH_CONFIG = {\n  supabaseUrl: %s,\n  supabaseAnonKey: %s\n};\n' \
+              "\"$SB_URL\"" "\"$SB_KEY\"" > ./public/js/config.js
           fi
 
       - name: Setup Pages
@@ -41,7 +48,7 @@ jobs:
       - name: Upload public artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "public"
+          path: "./public"
 
       - name: Deploy to GitHub Pages
         id: deployment

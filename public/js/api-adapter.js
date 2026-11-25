@@ -89,12 +89,15 @@
   async function sbFetch(path, { method = 'GET', body = null, headers = {}, auth = true, rawBody = false } = {}) {
     const { url, key } = getCfg();
     const sess = getStoredSession();
-    const token = auth && sess?.access_token ? sess.access_token : key;
     const reqHeaders = {
       apikey: key,
-      Authorization: `Bearer ${token}`,
       ...headers
     };
+    if (auth && sess?.access_token) {
+      reqHeaders.Authorization = `Bearer ${sess.access_token}`;
+    } else if (key.startsWith('eyJ')) {
+      reqHeaders.Authorization = `Bearer ${key}`;
+    }
     let payload = body;
     if (body && !rawBody && !(body instanceof FormData)) {
       reqHeaders['Content-Type'] = 'application/json';
