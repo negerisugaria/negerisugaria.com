@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebSekolah — Portal Resmi Sekolah</title>
+  <meta name="description" content="Portal informasi resmi WebSekolah: profil sekolah, berita, pengumuman, agenda, akademik, kesiswaan, galeri, PPDB/SPMB, dan layanan informasi." />
+  <link rel="icon" type="image/svg+xml" href="/assets/emblem.svg" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+
+  <div id="maintenance-banner" class="maintenance-banner hidden" role="status"></div>
+
+  <div class="utility-bar">
+    <div class="container utility-inner">
+      <div class="utility-info">
+        <span>NPSN: <strong id="util-npsn">20403174</strong></span>
+        <span class="sep" aria-hidden="true">•</span>
+        <span>Akreditasi: <strong id="util-akreditasi">A (Unggul)</strong></span>
+        <span class="sep hide-sm" aria-hidden="true">•</span>
+        <span class="hide-sm" id="util-hours">Senin – Jumat, 07.30 – 15.00 WIB</span>
+      </div>
+      <div class="utility-links">
+        <a href="/ppdb" data-link>PPDB/SPMB</a>
+        <a href="/kontak" data-link>Layanan Informasi</a>
+        <a href="/admin" class="admin-pill">Portal Admin CMS</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand" data-link>
+        <img src="/assets/emblem.svg" alt="Lambang WebSekolah" class="brand-logo" width="46" height="46" />
+        <div>
+          <div class="brand-title">WebSekolah</div>
+          <div class="brand-sub">Portal Informasi Resmi Sekolah</div>
+        </div>
+      </a>
+
+      <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Buka menu navigasi">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Navigasi Utama">
+        <ul class="nav-list">
+          <li><a href="/" data-link class="nav-link">Beranda</a></li>
+          <li class="has-dropdown">
+            <button type="button" class="nav-link dropdown-trigger" aria-expanded="false">Profil ▾</button>
+            <ul class="dropdown-menu">
+              <li><a href="/profil/sejarah" data-link>Sejarah</a></li>
+              <li><a href="/profil/visi-misi" data-link>Visi dan Misi</a></li>
+              <li><a href="/profil/struktur-organisasi" data-link>Struktur Organisasi</a></li>
+              <li><a href="/profil/sarana-prasarana" data-link>Sarana dan Prasarana</a></li>
+            </ul>
+          </li>
+          <li><a href="/akademik" data-link class="nav-link">Akademik</a></li>
+          <li><a href="/kesiswaan" data-link class="nav-link">Kesiswaan</a></li>
+          <li><a href="/berita" data-link class="nav-link">Berita</a></li>
+          <li><a href="/pengumuman" data-link class="nav-link">Pengumuman</a></li>
+          <li><a href="/agenda" data-link class="nav-link">Agenda</a></li>
+          <li><a href="/galeri" data-link class="nav-link">Galeri</a></li>
+          <li><a href="/ppdb" data-link class="nav-link">PPDB/SPMB</a></li>
+          <li><a href="/kontak" data-link class="nav-link nav-cta">Kontak</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <div class="container loading-state">Memuat portal resmi WebSekolah...</div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/assets/emblem.svg" alt="" width="40" height="40" />
+          <div>
+            <strong>WebSekolah</strong>
+            <div class="muted-light">Portal Informasi & Layanan Pendidikan</div>
+          </div>
+        </div>
+        <p class="footer-desc" id="footer-address">
+          Jl. Pendidikan No. 1, Indonesia
+        </p>
+        <p class="footer-contact">
+          Telp: <span id="footer-phone">(021) 512856</span> • Email: <span id="footer-email">info@websekolah.sch.id</span>
+        </p>
+      </div>
+
+      <div>
+        <h3>Navigasi Cepat</h3>
+        <ul class="footer-links">
+          <li><a href="/profil/sejarah" data-link>Sejarah Sekolah</a></li>
+          <li><a href="/profil/visi-misi" data-link>Visi dan Misi</a></li>
+          <li><a href="/akademik" data-link>Program Akademik</a></li>
+          <li><a href="/kesiswaan" data-link>Kesiswaan</a></li>
+          <li><a href="/ppdb" data-link>Informasi PPDB/SPMB</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Layanan & Tata Kelola</h3>
+        <ul class="footer-links">
+          <li><a href="/berita" data-link>Arsip Berita Resmi</a></li>
+          <li><a href="/pengumuman" data-link>Pengumuman Sekolah</a></li>
+          <li><a href="/agenda" data-link>Agenda Kegiatan</a></li>
+          <li><a href="/kontak" data-link>Formulir Permintaan Informasi</a></li>
+          <li><a href="/privasi" data-link>Kebijakan Privasi Data</a></li>
+          <li><a href="/sitemap.xml" target="_blank" rel="noopener">Sitemap XML</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <span>© 2026 WebSekolah. Seluruh konten dikelola melalui alur persetujuan resmi sekolah.</span>
+        <a href="/admin">Masuk Dashboard Pengelola</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api-adapter.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

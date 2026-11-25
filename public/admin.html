@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard CMS — WebSekolah</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/emblem.svg" />
+  <link rel="stylesheet" href="/css/styles.css?v=2" />
+  <link rel="stylesheet" href="/css/admin.css?v=2" />
+</head>
+<body class="admin-body">
+  <div id="login-view" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-brand">
+        <img src="/assets/emblem.svg" alt="Lambang WebSekolah" width="52" height="52" />
+        <div>
+          <h1>Portal Pengelola Website</h1>
+          <p>WebSekolah • CMS & RBAC</p>
+        </div>
+      </div>
+
+      <div id="login-error" class="alert alert-error hidden" role="alert"></div>
+
+      <form id="login-form" class="form-grid">
+        <div class="form-field">
+          <label for="login-email">Email Akun Sekolah</label>
+          <input id="login-email" class="input" type="email" required placeholder="nama@websekolah.sch.id" autocomplete="username" />
+        </div>
+        <div class="form-field">
+          <label for="login-password">Password</label>
+          <input id="login-password" class="input" type="password" required placeholder="••••••••" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Masuk Dashboard</button>
+      </form>
+
+      <div class="demo-box">
+        <div class="demo-title">Akun Pengujian Cepat (Sesuai Level Peran):</div>
+        <div class="demo-buttons">
+          <button type="button" class="btn btn-outline btn-sm quick-login" data-email="superadmin@websekolah.sch.id" data-pass="SuperAdmin#2026">
+            Isi Super Admin
+          </button>
+          <button type="button" class="btn btn-outline btn-sm quick-login" data-email="admin@websekolah.sch.id" data-pass="AdminSekolah#2026">
+            Isi Admin Sekolah
+          </button>
+          <button type="button" class="btn btn-outline btn-sm quick-login" data-email="editor@websekolah.sch.id" data-pass="Editor#2026">
+            Isi Editor
+          </button>
+          <button type="button" class="btn btn-outline btn-sm quick-login" data-email="kontributor@websekolah.sch.id" data-pass="Kontributor#2026">
+            Isi Kontributor
+          </button>
+        </div>
+        <p class="demo-note">
+          <strong>Super Admin</strong> memiliki akses penuh termasuk membuat akun <strong>Admin Sekolah</strong> baru, mengatur peran, melihat audit log, dan konfigurasi sistem.
+        </p>
+      </div>
+
+      <div style="margin-top:18px;text-align:center;">
+        <a href="/" style="font-size:0.9rem;">← Kembali ke Portal Publik</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboard-view" class="dashboard-shell hidden">
+    <aside class="sidebar" aria-label="Menu Pengelola">
+      <div class="sidebar-header">
+        <img src="/assets/emblem.svg" alt="" width="38" height="38" />
+        <div>
+          <div class="sb-title">CMS WebSekolah</div>
+          <div class="sb-sub">Portal Sekolah</div>
+        </div>
+      </div>
+
+      <div class="user-card">
+        <div id="user-name" class="user-name">-</div>
+        <div id="user-email" class="user-email">-</div>
+        <span id="user-role-badge" class="role-pill">-</span>
+      </div>
+
+      <nav id="sidebar-nav" class="sidebar-nav"></nav>
+
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" rel="noopener" class="btn btn-outline-light btn-sm" style="width:100%;margin-bottom:8px;">Lihat Portal Publik ↗</a>
+        <button id="logout-btn" type="button" class="btn btn-gold btn-sm" style="width:100%;">Keluar (Logout)</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <h1 id="view-title">Dashboard</h1>
+          <p id="view-subtitle" class="admin-subtitle">Sistem Pengelolaan Konten & Hak Akses Berbasis Peran</p>
+        </div>
+        <div id="topbar-actions"></div>
+      </header>
+
+      <div id="admin-toast" class="alert hidden" role="status"></div>
+      <section id="admin-content"></section>
+    </main>
+  </div>
+
+  <script src="/js/config.js?v=2"></script>
+  <script src="/js/api-adapter.js?v=2"></script>
+  <script src="/js/admin.js?v=3"></script>
+</body>
+</html>

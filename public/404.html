@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mengalihkan... | WebSekolah</title>
+  <script>
+    (function () {
+      var p = window.location.pathname || '/';
+      if (p === '/admin' || p === '/admin/') {
+        window.location.replace('/admin.html');
+        return;
+      }
+      var target = '/?__route=' + encodeURIComponent(p + window.location.search);
+      window.location.replace(target);
+    })();
+  </script>
+</head>
+<body></body>
+</html>

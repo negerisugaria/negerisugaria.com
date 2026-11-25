@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Lambang Resmi WebSekolah">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14325e"/>
+      <stop offset="100%" stop-color="#0a1930"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e5b84b"/>
+      <stop offset="100%" stop-color="#b57f1d"/>
+    </linearGradient>
+  </defs>
+  <path d="M60 8 L104 24 V60 C104 86 85 104 60 114 C35 104 16 86 16 60 V24 Z" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
+  <path d="M60 18 L94 30 V58 C94 79 79 94 60 102 C41 94 26 79 26 58 V30 Z" fill="none" stroke="rgba(229,184,75,0.45)" stroke-width="1.5"/>
+  <!-- Lotus / Padma motif -->
+  <path d="M60 28 C67 38 71 48 60 60 C49 48 53 38 60 28 Z" fill="url(#goldGrad)"/>
+  <path d="M40 42 C50 44 56 51 57 61 C47 59 41 52 40 42 Z" fill="#e5b84b" opacity="0.9"/>
+  <path d="M80 42 C70 44 64 51 63 61 C73 59 79 52 80 42 Z" fill="#e5b84b" opacity="0.9"/>
+  <!-- Open Book -->
+  <path d="M36 67 Q48 62 60 68 Q72 62 84 67 V82 Q72 77 60 83 Q48 77 36 82 Z" fill="#faf8f3"/>
+  <line x1="60" y1="68" x2="60" y2="83" stroke="#14325e" stroke-width="2"/>
+  <text x="60" y="96" text-anchor="middle" fill="#e5b84b" font-family="Georgia, serif" font-size="8.2" font-weight="bold" letter-spacing="1.1">WEBSEKOLAH</text>
+</svg>

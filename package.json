@@ -1,0 +1,14 @@
+{
+  "name": "websekolah",
+  "version": "1.0.0",
+  "description": "Website Resmi & CMS Portal WebSekolah sesuai Software Architecture Design (SAD) v1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node src/db/seed.js",
+    "test": "node --test tests/app.test.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
