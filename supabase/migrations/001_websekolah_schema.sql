@@ -386,3 +386,53 @@ CREATE POLICY "storage_media_admin_delete" ON storage.objects
     bucket_id = 'media'
     AND public.current_user_role() IN ('super_admin', 'admin_sekolah', 'editor')
   );
+
+-- 6. Grant Privilege Dasar PostgreSQL (dibatasi lebih lanjut oleh RLS di atas)
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+
+GRANT SELECT ON
+  public.school_profiles,
+  public.site_settings,
+  public.pages,
+  public.posts,
+  public.categories,
+  public.media,
+  public.announcements,
+  public.events
+TO anon;
+
+GRANT SELECT (id, name, unit, status) ON public.profiles TO anon;
+GRANT INSERT ON public.contact_messages TO anon;
+
+GRANT SELECT ON
+  public.roles,
+  public.profiles,
+  public.categories,
+  public.media,
+  public.posts,
+  public.post_reviews,
+  public.announcements,
+  public.events,
+  public.pages,
+  public.school_profiles,
+  public.site_settings,
+  public.contact_messages,
+  public.audit_logs
+TO authenticated;
+
+GRANT INSERT, UPDATE, DELETE ON
+  public.profiles,
+  public.categories,
+  public.media,
+  public.posts,
+  public.post_reviews,
+  public.announcements,
+  public.events,
+  public.pages,
+  public.school_profiles,
+  public.site_settings,
+  public.contact_messages
+TO authenticated;
+
+GRANT INSERT ON public.audit_logs TO authenticated;

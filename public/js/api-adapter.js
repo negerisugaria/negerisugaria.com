@@ -256,10 +256,10 @@
       if (body.website && String(body.website).trim() !== '') {
         throw makeError(400, 'Permintaan ditolak oleh sistem perlindungan spam.');
       }
-      const inserted = await sbFetch('/rest/v1/contact_messages', {
+      await sbFetch('/rest/v1/contact_messages', {
         method: 'POST',
         auth: false,
-        headers: { Prefer: 'return=representation' },
+        headers: { Prefer: 'return=minimal' },
         body: {
           name: String(body.name || '').trim(),
           email: String(body.email || '').trim().toLowerCase(),
@@ -270,7 +270,7 @@
         }
       });
       return {
-        id: inserted?.[0]?.id || Date.now(),
+        id: 'terkirim',
         confirmation: 'Terima kasih. Permintaan informasi Anda telah tercatat pada sistem layanan WebSekolah.'
       };
     }
