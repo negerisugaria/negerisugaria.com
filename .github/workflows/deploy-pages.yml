@@ -15,41 +15,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "public"
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Verify public folder exists
-        run: |
-          if [ ! -d "./public" ]; then
-            echo "Folder 'public/' tidak ditemukan di root repositori GitHub. Pastikan Anda sudah push seluruh proyek dari lokal."
-            ls -la
-            exit 1
-          fi
-
-      - name: Inject Supabase public config if GitHub Variables are set
-        env:
-          SB_URL: ${{ vars.SUPABASE_URL }}
-          SB_KEY: ${{ vars.SUPABASE_ANON_KEY }}
-        run: |
-          if [ -n "$SB_URL" ] && [ -n "$SB_KEY" ]; then
-            printf 'window.WEBSEKOLAH_CONFIG = {\n  supabaseUrl: %s,\n  supabaseAnonKey: %s\n};\n' \
-              "\"$SB_URL\"" "\"$SB_KEY\"" > ./public/js/config.js
-          fi
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload public artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "./public"
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
